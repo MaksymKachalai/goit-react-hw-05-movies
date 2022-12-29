@@ -13,6 +13,13 @@ export default function Reviews() {
     getMovieReviews(filmId).then(reviews => setReviews(reviews));
   }, [filmId]);
 
+  if (reviews.length === 0)
+    return (
+      <>
+        <p>No reviews</p>
+      </>
+    );
+
   const filmReviews = reviews.map(review => {
     return (
       <li key={review.id}>

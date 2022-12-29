@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { getTrandingMovies } from 'service/getTrandingMovies';
 import styled from 'styled-components';
 
 const FilmItem = styled(NavLink)`
   color: #ffffff;
-  text-decoration: none;
   font-size: 20px;
   margin-bottom: 10px;
 `;
@@ -18,23 +17,37 @@ const FilmList = styled('ul')`
 
 export default function TrandingMovies() {
   const [movies, setMovies] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
-    getTrandingMovies().then(movies => setMovies(movies));
+    try {
+      getTrandingMovies().then(movies => setMovies(movies));
+    } catch (e) {
+      console.log(e);
+    }
   }, []);
+
+  if (movies.length === 0) {
+    return (
+      <>
+        <p>Sorry, something went wrong. Try again</p>
+      </>
+    );
+  }
 
   return (
     <>
       <FilmList>
         {movies.map(movie => {
           return (
-            <FilmItem key={movie.id} to={`movies/${movie.id}`}>
-              {movie.title || movie.name}
-            </FilmItem>
+            <li key={movie.id}>
+              <FilmItem to={`movies/${movie.id}`} state={{ from: location }}>
+                {movie.title || movie.name}
+              </FilmItem>
+            </li>
           );
         })}
       </FilmList>
-      <Outlet />
     </>
   );
 }
