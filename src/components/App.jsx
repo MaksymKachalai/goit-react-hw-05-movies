@@ -12,11 +12,7 @@ export const App = () => {
   return (
     <div>
       <Routes>
-        <Route
-          path="/"
-          element={<SharedLayout />}
-          basename="goit-react-hw-05-movies"
-        >
+        <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />
           <Route path="movies" element={<Movies />} />
           <Route path="movies/:trandingId" element={<MovieDetails />}>
