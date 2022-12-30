@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import getMovieByQuery from 'service/getMovieByQuery';
 import { NavLink, useLocation, useSearchParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const NavItem = styled(NavLink)`
@@ -65,3 +66,9 @@ export default function MovieSearch() {
     </div>
   );
 }
+
+MovieSearch.propTypes = {
+  inputValue: PropTypes.string,
+  searchParams: PropTypes.string,
+  movies: PropTypes.arrayOf(PropTypes.object),
+};

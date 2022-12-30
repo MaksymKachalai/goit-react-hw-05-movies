@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, NavLink, Outlet, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import getMovieById from 'service/getMovieById';
 
 const NavList = styled('nav')`
@@ -44,15 +45,15 @@ export default function MovieDetails() {
   const [movie, setMovie] = useState({});
 
   useEffect(() => {
-    try {
-      getMovieById(trandingId).then(movie => setMovie(movie));
-    } catch (error) {}
+    getMovieById(trandingId)
+      .then(movie => setMovie(movie))
+      .catch(console.log);
   }, [trandingId]);
 
   const location = useLocation();
 
-  if (!movie) {
-    return <>No movie</>;
+  if (!movie || Object.keys(movie).length === 0) {
+    return <>Sorry, no film found, try again</>;
   }
 
   const {
@@ -66,8 +67,10 @@ export default function MovieDetails() {
   const movieYear = new Date(release_date).getFullYear();
 
   const movieCountry = production_countries
-    ? production_countries[0].name
-    : 'USA';
+    .map(country => {
+      return country.name;
+    })
+    .join(', ');
 
   return (
     <>
@@ -97,3 +100,8 @@ export default function MovieDetails() {
     </>
   );
 }
+
+MovieDetails.propTypes = {
+  trandingId: PropTypes.string,
+  movie: PropTypes.object,
+};

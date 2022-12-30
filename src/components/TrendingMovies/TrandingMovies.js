@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { getTrandingMovies } from 'service/getTrandingMovies';
 import styled from 'styled-components';
 
@@ -51,3 +52,7 @@ export default function TrandingMovies() {
     </>
   );
 }
+
+TrandingMovies.propTypes = {
+  movies: PropTypes.arrayOf(PropTypes.object),
+};

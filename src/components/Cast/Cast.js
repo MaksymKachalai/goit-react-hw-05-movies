@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import getCast from 'service/getCast';
 
 export default function Cast() {
@@ -13,7 +14,7 @@ export default function Cast() {
 
   const actorsList = actors.map(
     ({ character, gender, original_name, profile_path, cast_id }) => {
-      if (!profile_path) return;
+      if (!profile_path) return null;
       return (
         <li key={cast_id}>
           <img
@@ -34,3 +35,8 @@ export default function Cast() {
     </div>
   );
 }
+
+Cast.propTypes = {
+  actors: PropTypes.arrayOf(PropTypes.object),
+  filmId: PropTypes.string,
+};

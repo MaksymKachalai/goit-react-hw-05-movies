@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import getMovieReviews from 'service/getMovieReviews';
 import { useOutletContext } from 'react-router-dom';
 
@@ -35,3 +36,8 @@ export default function Reviews() {
     </div>
   );
 }
+
+Reviews.propTypes = {
+  filmId: PropTypes.string,
+  reviews: PropTypes.arrayOf(PropTypes.object),
+};

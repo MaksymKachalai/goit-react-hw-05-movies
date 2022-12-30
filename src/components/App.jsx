@@ -15,7 +15,7 @@ export const App = () => {
         <Route
           path="/"
           element={<SharedLayout />}
-          basename="goit-react-hw-05-movies/"
+          basename="goit-react-hw-05-movies"
         >
           <Route index element={<Home />} />
           <Route path="movies" element={<Movies />} />
