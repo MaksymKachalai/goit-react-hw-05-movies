@@ -1,5 +1,6 @@
 import { Outlet, NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { Suspense } from 'react';
 
 const NavItem = styled(NavLink)`
   position: relative;
@@ -54,7 +55,9 @@ export const SharedLayout = () => {
         <NavItem to="/">Home</NavItem>
         <NavItem to="/movies">Movies</NavItem>
       </NavList>
-      <Outlet />
+      <Suspense>
+        <Outlet />
+      </Suspense>
     </div>
   );
 };

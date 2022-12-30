@@ -42,25 +42,20 @@ const MovieDescriptionsBox = styled('div')`
 export default function MovieDetails() {
   const { trandingId } = useParams(null);
   const [movie, setMovie] = useState({});
+
   useEffect(() => {
     try {
       getMovieById(trandingId).then(movie => setMovie(movie));
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }, [trandingId]);
 
   const location = useLocation();
 
-  if (!movie.poster_path)
-    return (
-      <>
-        <p>No film found</p>
-      </>
-    );
+  if (!movie) {
+    return <>No movie</>;
+  }
 
   const {
-    poster_path,
     original_title,
     production_countries,
     popularity,
@@ -74,15 +69,16 @@ export default function MovieDetails() {
     ? production_countries[0].name
     : 'USA';
 
-  const movieImage = `https://image.tmdb.org/t/p/w500${poster_path}`;
-
   return (
     <>
       <ButtonBox>
         <ButtonBack to={location.state?.from ?? '/movies'}>Go back</ButtonBack>
       </ButtonBox>
       <MovieDetailsBox>
-        <img src={movieImage} alt="" />
+        <img
+          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+          alt=""
+        />
         <MovieDescriptionsBox>
           <h2>
             {original_title}({movieYear})
